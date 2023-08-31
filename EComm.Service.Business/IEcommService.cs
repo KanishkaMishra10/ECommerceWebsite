@@ -1,14 +1,14 @@
-﻿using EComm.Core.dto.ResponseModel;
-using EComm.Core.dto.RequestModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EComm.Core.dto.ResponseModel;
+using EComm.Core.dto.RequestModel;
 
-namespace EComm.Service.Repository
+namespace EComm.Service.Business
 {
-    public interface IECommRepository
+    public interface IEcommService
     {
         IEnumerable<ProductResponseModel> GetProductsByTitle(string title);
 
@@ -23,9 +23,9 @@ namespace EComm.Service.Repository
 
         public void AddNewProduct(ProductRequestModel product);     //for seller
 
-        public void UpdateProduct(int productId, int userId);     //for seller
+        public void UpdateProduct(ProductRequestModel product);     //for seller
 
-        public void AddToCart(ProductRequestModel productRequestModel);
+        public void AddToCart(CartRequestModel cartRequestModel);
 
         public IEnumerable<decimal> TotalCartValue(int userId);
 
@@ -36,14 +36,11 @@ namespace EComm.Service.Repository
 
         // Get all orders
         IEnumerable<string> GetAllOrders(int userId);   //order history
-        
+
         // Cancel order
         public void CancelOrder(int orderId, int userId);
-        
+
         //shiftment details
         public void ShipmentDetails(int orderId);
-
-        //
-        
     }
 }

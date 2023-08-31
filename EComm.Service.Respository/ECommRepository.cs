@@ -2,12 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using EComm.Core.dto.ResponseModel;
+using EComm.Core.dto.RequestModel;
 
-namespace EComm.Service.Respository
+namespace EComm.Service.Repository
 {
-    internal class ECommRepository : IECommRepository
+    public class ECommRepository : IECommRepository
     {
         private readonly ECommContext _context;
 
@@ -17,35 +20,52 @@ namespace EComm.Service.Respository
         }
 
         public void AddNewProduct(ProductRequestModel product)
-
-
         {
             _context.Add(new Product
             {
-                ProductId = order.BookId,
-                Quantity = order.Quantity,
-                IsBorrowed = order.isBorrowed
+                ProductName = product.ProductName,
+                CategoryId = product.CategoryId,
+                StockQuantity = product.StockQuantity,
+                UserId = product.UserId,
+                Discount = product.Discount,
+                Price = product.Price,
+                Color = product.Color,
+                Description = product.Description
             });
             _context.SaveChanges();
         }
 
-        public void AddToCart(int productId)
+        public void AddToCart(CartRequestModel productDetails)
         {
-            throw new NotImplementedException();
+            var prod = _context.Products.Find(productDetails.ProductId);
+            if (prod != null)
+            {
+
+                _context.Add(new Cart
+                {
+                    ProductId = productDetails.ProductId,
+                    UserId = productDetails.UserId,
+                    Quantity = productDetails.Quantity
+                });
+                _context.SaveChanges();
+            }
+
         }
 
-        public void CancelOrder(int orderId)
+
+        public void CancelOrder(int orderId, int userId)
         {
-            throw new NotImplementedException();
+            _context.Orders.Where(x => x.OrderId == orderId && x.UserId == userId).FirstOrDefault().OderStatus = "Cancelled";
+            _context.SaveChanges();
         }
 
         public IEnumerable<string> GetAllOrders(int userId)
         {
             List<string> listOfOrders = (from o in _context.Orders
-                                               join oi in _context.OrderItems on o.OrderId equals oi.OrderId
-                                               join b in _context.Products on oi.ProductId equals b.ProductId
-                                               where o.UserId == userId
-                                               select b.ProductName).ToList();
+                                         join oi in _context.OrderItems on o.OrderId equals oi.OrderId
+                                         join b in _context.Products on oi.ProductId equals b.ProductId
+                                         where o.UserId == userId && o.OderStatus != "Cancelled"
+                                         select b.ProductName).ToList();
             return listOfOrders;
         }
 
@@ -80,34 +100,66 @@ namespace EComm.Service.Respository
             return (IEnumerable<ProductResponseModel>)products;
         }
 
-        public void PlaceOrder(int userId)
+
+        public void RemoveCartItem(int productId, int userId)
         {
-            throw new NotImplementedException();
+            var product = _context.Products.Find(productId);
+            if (product != null)
+            {
+                var item = (from o in _context.Carts
+                            where o.UserId == userId && o.ProductId == productId
+                            select o).FirstOrDefault();
+                if (item != null)
+                {
+                    _context.Remove(item);
+                    _context.SaveChanges();
+                }
+
+            }
         }
 
-        public void RemoveCartItem(int cartId)
+        public void UpdateCart(int productId, int userId, int quantity)
         {
-            throw new NotImplementedException();
+            _context.Update(new Cart
+            {
+                ProductId = productId,
+                UserId = userId,
+                Quantity = quantity });
+            _context.SaveChanges();
+
         }
+
 
         public void ShipmentDetails(int orderId)
         {
             throw new NotImplementedException();
+
         }
+
 
         public IEnumerable<decimal> TotalCartValue(int userId)
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateCart(CartRequestModel cartRequestModel)
+
+        public void UpdateProduct(int productId, int userId)         //used by seller --- wrong
         {
-            throw new NotImplementedException();
+            var product = _context.Products.Find(productId);
+            if (product != null)
+            {
+                var item = (from o in _context.Orders
+                            where o.UserId == userId && o.ProductId == productId
+                            select o).FirstOrDefault();
+
+                _context.SaveChanges();
+            }
         }
 
-        public void UpdateProduct(ProductRequestModel product)
+        public void PlaceOrder(int userId)
         {
             throw new NotImplementedException();
         }
+        
     }
 }
