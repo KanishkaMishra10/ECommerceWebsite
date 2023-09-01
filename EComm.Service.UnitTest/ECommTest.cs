@@ -39,8 +39,8 @@ namespace EComm.Service.UnitTest
             Assert.AreEqual(200, actual.StatusCode);
         }
 
-      
-  
+
+
 
         [TestMethod]
 
@@ -69,5 +69,22 @@ namespace EComm.Service.UnitTest
         //    Assert.IsNotNull(result);
         //    Assert.AreEqual(200, actual.StatusCode);
         //}
+
+        [TestMethod]
+
+        public void GetProductsByTitle_should_return_ok()
+        {
+            string title = "abc";
+            List<Product> products = new();
+            mockEcommService.Setup(x => x.GetProductsByTitle(title)).Returns(products);
+            var result = ecommController.GetProductsByTitle(title);
+            var actual = result as OkObjectResult;
+            Assert.IsNotNull(result);
+            Assert.AreEqual(200, actual.StatusCode);
+        }
+
+       
+
     }
+    
 }
