@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace EComm.Service.API.Controllers
 {
-    [Authorize]
+    
     public class ECommController : Controller
     {
         private readonly IEcommService _service;
@@ -47,6 +47,11 @@ namespace EComm.Service.API.Controllers
         [Route("GetProductsById/{productId}")]
         public IActionResult GetProductsById(int productId)
         {
+            if (productId < 0)
+            {
+                return BadRequest("Invalid Product Id");
+            }
+
             var result = _service.GetProductsById(productId);
             return Ok(result);
         }

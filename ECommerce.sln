@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EComm.Service.Business", "E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EComm.Service.API", "EComm.Service.API\EComm.Service.API\EComm.Service.API.csproj", "{52EA4042-D6CE-4FF5-B1F6-5447F7FB9C5B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EComm.Service.UnitTest", "EComm.Service.UnitTest\EComm.Service.UnitTest.csproj", "{0CC72C38-DB0F-49F9-8A21-25E3C24AF701}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{52EA4042-D6CE-4FF5-B1F6-5447F7FB9C5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52EA4042-D6CE-4FF5-B1F6-5447F7FB9C5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52EA4042-D6CE-4FF5-B1F6-5447F7FB9C5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CC72C38-DB0F-49F9-8A21-25E3C24AF701}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CC72C38-DB0F-49F9-8A21-25E3C24AF701}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CC72C38-DB0F-49F9-8A21-25E3C24AF701}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CC72C38-DB0F-49F9-8A21-25E3C24AF701}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,6 +74,7 @@ Global
 		{4F95E7A6-EA8C-4966-B698-C60059E986F2} = {5346D620-754F-42DE-AA1A-6355E849A81E}
 		{B7963CFE-70F3-438D-B47B-A50739042BBD} = {764DB1DD-5D54-487D-956D-6F12977A4F05}
 		{52EA4042-D6CE-4FF5-B1F6-5447F7FB9C5B} = {764DB1DD-5D54-487D-956D-6F12977A4F05}
+		{0CC72C38-DB0F-49F9-8A21-25E3C24AF701} = {764DB1DD-5D54-487D-956D-6F12977A4F05}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8AFBBC87-8F95-4DB0-80B6-2D63309A8D57}
