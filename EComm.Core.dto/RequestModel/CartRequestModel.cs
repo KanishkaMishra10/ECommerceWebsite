@@ -8,6 +8,7 @@ namespace EComm.Core.dto.RequestModel
 {
     public class CartRequestModel
     {
+        public int CartId { get; set; }
         public int ProductId { get; set; }
         public int UserId { get; set; }
         public int Quantity { get; set; }

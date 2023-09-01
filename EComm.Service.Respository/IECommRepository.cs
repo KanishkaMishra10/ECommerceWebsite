@@ -1,5 +1,6 @@
 ﻿using EComm.Core.dto.ResponseModel;
 using EComm.Core.dto.RequestModel;
+using Ecomm.Service.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,15 +11,15 @@ namespace EComm.Service.Repository
 {
     public interface IECommRepository
     {
-        IEnumerable<ProductResponseModel> GetProductsByTitle(string title);
+        IEnumerable<Product> GetProductsByTitle(string title);
 
-        IEnumerable<ProductResponseModel> GetAvailableProducts();
+        IEnumerable<Product> GetAvailableProducts();
 
-        IEnumerable<ProductResponseModel> GetProductsByCategoryId(int categoryId);
+        IEnumerable<Product> GetProductsByCategoryId(int categoryId);
 
-        IEnumerable<ProductResponseModel> GetProductsById(int productId);
+        IEnumerable<Product> GetProductsById(int productId);
 
-        IEnumerable<CartResponseModel> GetCartDetails(int userId);
+        IEnumerable<Cart> GetCartDetails(int userId);
         public void PlaceOrder(int userId);
 
         public void AddNewProduct(ProductRequestModel product);     //for seller

@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using EComm.Core.dto.ResponseModel;
 using EComm.Core.dto.RequestModel;
 using EComm.Service.Repository;
+using Ecomm.Service.Domain.Models;
 using AutoMapper;
 using System.Net;
+using Ecomm.Service.Domain.Models;
 
 namespace EComm.Service.Business
 {
@@ -22,34 +24,34 @@ namespace EComm.Service.Business
             _mapper = mapper;
         }
 
-        public IEnumerable<ProductResponseModel> GetProductsByTitle(string title)
+        public IEnumerable<Product> GetProductsByTitle(string title)
         {
             var result = _repository.GetProductsByTitle(title);
-            return _mapper.Map<IEnumerable<ProductResponseModel>>(result);
+            return _mapper.Map<IEnumerable<Product>>(result);
         }
 
-        public IEnumerable<ProductResponseModel> GetAvailableProducts()
+        public IEnumerable<Product> GetAvailableProducts()
         {
             var result = _repository.GetAvailableProducts();
-            return _mapper.Map<IEnumerable<ProductResponseModel>>(result);
+            return _mapper.Map<IEnumerable<Product>>(result);
         }
 
-        public IEnumerable<ProductResponseModel> GetProductsByCategoryId(int categoryId)
+        public IEnumerable<Product> GetProductsByCategoryId(int categoryId)
         {
             var result = _repository.GetProductsByCategoryId(categoryId);
-            return _mapper.Map<IEnumerable<ProductResponseModel>>(result);
+            return _mapper.Map<IEnumerable<Product>>(result);
         }
 
-       public IEnumerable<ProductResponseModel> GetProductsById(int productId)
+       public IEnumerable<Product> GetProductsById(int productId)
         {
             var result = _repository.GetProductsById(productId);
-            return _mapper.Map<IEnumerable<ProductResponseModel>>(result);
+            return _mapper.Map<IEnumerable<Product>>(result);
         }
 
-        public IEnumerable<CartResponseModel> GetCartDetails(int userId)
+        public IEnumerable<Cart> GetCartDetails(int userId)
         {
             var result = _repository.GetCartDetails(userId);
-            return _mapper.Map<IEnumerable<CartResponseModel>>(result);
+            return _mapper.Map<IEnumerable<Cart>>(result);
         }
         public void PlaceOrder(int userId)
         {
@@ -104,10 +106,11 @@ namespace EComm.Service.Business
             _repository.ShipmentDetails(orderId);
         }
 
-        public void UpdateProduct(ProductRequestModel product)
-        {
-            throw new NotImplementedException();
-        }
+       
+        
+
+
+
 
         //
     }

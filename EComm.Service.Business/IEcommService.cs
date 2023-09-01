@@ -5,27 +5,28 @@ using System.Text;
 using System.Threading.Tasks;
 using EComm.Core.dto.ResponseModel;
 using EComm.Core.dto.RequestModel;
+using Ecomm.Service.Domain.Models;
 
 namespace EComm.Service.Business
 {
     public interface IEcommService
     {
-        IEnumerable<ProductResponseModel> GetProductsByTitle(string title);
+        IEnumerable<Product> GetProductsByTitle(string title);
 
-        IEnumerable<ProductResponseModel> GetAvailableProducts();
+        IEnumerable<Product> GetAvailableProducts();
 
-        IEnumerable<ProductResponseModel> GetProductsByCategoryId(int categoryId);
+        IEnumerable<Product> GetProductsByCategoryId(int categoryId);
 
-        IEnumerable<ProductResponseModel> GetProductsById(int productId);
+        IEnumerable<Product> GetProductsById(int productId);
 
-        IEnumerable<CartResponseModel> GetCartDetails(int userId);
+        IEnumerable<Cart> GetCartDetails(int userId);
         public void PlaceOrder(int userId);
 
         public void AddNewProduct(ProductRequestModel product);     //for seller
 
-        public void UpdateProduct(ProductRequestModel product);     //for seller
+           //for seller
 
-        public void AddToCart(CartRequestModel cartRequestModel);
+        public void AddToCart(CartRequestModel product);
 
         public IEnumerable<decimal> TotalCartValue(int userId);
 
@@ -42,5 +43,6 @@ namespace EComm.Service.Business
 
         //shiftment details
         public void ShipmentDetails(int orderId);
+        void UpdateProduct(int productId, int userId);
     }
 }

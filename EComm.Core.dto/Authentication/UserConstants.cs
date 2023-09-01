@@ -10,8 +10,8 @@ namespace EComm.Core.dto.Authentication
     {
         public static List<UserModel> Users = new()
             {
-                    new UserModel(){ Username="kanishka",Password="kanishka@1234",Role="Admin"},
-                    new UserModel(){ Username="Riya",Password="Riya@234",Role="Developer"}
+                    new UserModel(){ Username="kanishka",Password="kanishka@1234",Role="Buyer"},
+                    new UserModel(){ Username="Riya",Password="Riya@234",Role="Seller"}
             };
     }
 }

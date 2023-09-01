@@ -5,18 +5,19 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace EComm.Service.API.Controllers
 {
-    public class ECommController : ControllerBase
+    [Authorize]
+    public class ECommController : Controller
     {
-        private readonly EcommService _service;
+        private readonly IEcommService _service;
 
-        public ECommController(EcommService service)
+        public ECommController(IEcommService service)
         {
             _service = service;
         }
 
         [HttpGet]
-        [Route("api/[controller]/GetProductsByTitle/{title}")]
-       // [Authorize["Role"="Seller"]]
+        [Route("GetProductsByTitle/{title}")]
+        
 
         public IActionResult GetProductsByTitle(string title)
         {
@@ -25,7 +26,7 @@ namespace EComm.Service.API.Controllers
         }
 
         [HttpGet]
-        [Route("api/[controller]/GetAvailableProducts")]
+        [Route("GetAvailableProducts")]
 
         public IActionResult GetAvailableProducts()
         {
@@ -35,7 +36,7 @@ namespace EComm.Service.API.Controllers
 
         [HttpGet]
 
-        [Route("api/[controller]/GetProductsByCategoryId/{categoryId}")]
+        [Route("GetProductsByCategoryId/{categoryId}")]
         public IActionResult GetProductsByCategoryId(int categoryId)
         {
             var result = _service.GetProductsByCategoryId(categoryId);
@@ -43,7 +44,7 @@ namespace EComm.Service.API.Controllers
         }
 
         [HttpGet]
-        [Route("api/[controller]/GetProductsById/{productId}")]
+        [Route("GetProductsById/{productId}")]
         public IActionResult GetProductsById(int productId)
         {
             var result = _service.GetProductsById(productId);
@@ -51,7 +52,7 @@ namespace EComm.Service.API.Controllers
         }
 
         [HttpGet]
-        [Route("api/[controller]/GetCartDetails/{userId}")]
+        [Route("GetCartDetails/{userId}")]
         public IActionResult GetCartDetails(int userId)
         {
             var result = _service.GetCartDetails(userId);
@@ -59,7 +60,8 @@ namespace EComm.Service.API.Controllers
         }
 
         [HttpPost]
-        [Route("api/[controller]/PlaceOrder/{userId}")]
+        [Route("PlaceOrder/{userId}")]
+        [Authorize(Roles = "Buyer")]
         public IActionResult PlaceOrder(int userId)
         {
             _service.PlaceOrder(userId);
@@ -67,7 +69,8 @@ namespace EComm.Service.API.Controllers
         }
 
         [HttpPost]
-        [Route("api/[controller]/AddNewProduct")]
+        [Route("AddNewProduct")]
+        [Authorize(Roles = "Seller")]
         public IActionResult AddNewProduct(ProductRequestModel product)
         {
             _service.AddNewProduct(product);
@@ -75,7 +78,8 @@ namespace EComm.Service.API.Controllers
         }
 
         [HttpPost]
-        [Route("api/[controller]/UpdateProduct")]
+        [Route("UpdateProduct")]
+        [Authorize(Roles = "Seller")]
         public IActionResult UpdateProduct([FromBody] int productId, int userId)
         {
             _service.UpdateProduct(productId, userId);
@@ -83,15 +87,16 @@ namespace EComm.Service.API.Controllers
         }
 
         [HttpPost]
-        [Route("api/[controller]/AddToCart")]
-        public IActionResult AddToCart(CartRequestModel product)
+        [Route("AddToCart")]
+        [Authorize(Roles = "Buyer")]
+        public IActionResult AddToCart([FromBody] CartRequestModel product)
         {
             _service.AddToCart(product);
             return Ok();
         }
 
         [HttpGet]
-        [Route("api/[controller]/TotalCartValue/{userId}")]
+        [Route("TotalCartValue/{userId}")]
         public IActionResult TotalCartValue(int userId)
         {
             var result = _service.TotalCartValue(userId);
@@ -99,7 +104,8 @@ namespace EComm.Service.API.Controllers
         }
 
         [HttpGet]
-        [Route("api/[controller]/UpdateCart")]
+        [Route("UpdateCart")]
+        [Authorize(Roles = "Seller")]
         public IActionResult UpdateCart([FromBody] int productId, int userId, int quantity)
         {
             _service.UpdateCart(productId, userId, quantity);
@@ -107,7 +113,7 @@ namespace EComm.Service.API.Controllers
         }
 
         [HttpGet]
-        [Route("api/[controller]/GetAllOrders/{unserId}")]
+        [Route("GetAllOrders/{userId}")]
         public IActionResult GetAllOrders(int userId)
         {
             var result = _service.GetAllOrders(userId);
@@ -117,7 +123,7 @@ namespace EComm.Service.API.Controllers
 
 
         [HttpPost]
-        [Route("api/[controller]/CancelOrder")]
+        [Route("CancelOrder")]
         public IActionResult CancelOrder([FromBody] int orderId, int userId)
         {
             _service.CancelOrder(orderId, userId);
@@ -125,7 +131,7 @@ namespace EComm.Service.API.Controllers
         }
 
         [HttpPost]
-        [Route("api/[controller]/RemoveCartItem")]
+        [Route("RemoveCartItem")]
         public IActionResult RemoveCartItem([FromBody] int productId, int userId)
         {
             _service.RemoveCartItem(productId, userId);

@@ -37,18 +37,20 @@ namespace EComm.Service.Repository
 
         public void AddToCart(CartRequestModel productDetails)
         {
-            var prod = _context.Products.Find(productDetails.ProductId);
-            if (prod != null)
-            {
+            //var prod = _context.Products.Find(productDetails.ProductId);
+            //if (prod != null)
+            //{
 
                 _context.Add(new Cart
                 {
+                   
                     ProductId = productDetails.ProductId,
                     UserId = productDetails.UserId,
                     Quantity = productDetails.Quantity
+
                 });
-                _context.SaveChanges();
-            }
+
+            _context.SaveChanges();
 
         }
 
@@ -70,34 +72,34 @@ namespace EComm.Service.Repository
         }
 
 
-        public IEnumerable<ProductResponseModel> GetAvailableProducts()
+        public IEnumerable<Product> GetAvailableProducts()
         {
             List<Product> listOfAvailableProducts = _context.Products.Where(x => x.StockQuantity > 0).ToList();
-            return (IEnumerable<ProductResponseModel>)listOfAvailableProducts;
+            return (IEnumerable<Product>)listOfAvailableProducts;
         }
 
-        public IEnumerable<CartResponseModel> GetCartDetails(int userId)
+        public IEnumerable<Cart> GetCartDetails(int userId)
         {
             List<Cart> cartDetails = _context.Carts.Where(x => x.UserId == userId).ToList();
-            return (IEnumerable<CartResponseModel>)cartDetails;
+            return (IEnumerable<Cart>)cartDetails;
         }
 
-        public IEnumerable<ProductResponseModel> GetProductsByCategoryId(int categoryId)
+        public IEnumerable<Product> GetProductsByCategoryId(int categoryId)
         {
             List<Product> listOfProducts = _context.Products.Where(b => b.CategoryId == categoryId).ToList();
-            return (IEnumerable<ProductResponseModel>)listOfProducts;
+            return (IEnumerable<Product>)listOfProducts;
         }
 
-        public IEnumerable<ProductResponseModel> GetProductsById(int productId)
+        public IEnumerable<Product> GetProductsById(int productId)
         {
             List<Product> products = _context.Products.Where(b => b.ProductId == productId).ToList();
-            return (IEnumerable<ProductResponseModel>)products;
+            return products;
         }
 
-        public IEnumerable<ProductResponseModel> GetProductsByTitle(string title)
+        public IEnumerable<Product> GetProductsByTitle(string title)
         {
             List<Product> products = _context.Products.Where(a => a.ProductName == title).ToList();
-            return (IEnumerable<ProductResponseModel>)products;
+            return (IEnumerable<Product>)products;
         }
 
 
@@ -148,11 +150,16 @@ namespace EComm.Service.Repository
             var product = _context.Products.Find(productId);
             if (product != null)
             {
-                var item = (from o in _context.Orders
+                var item = (from o in _context.Products
                             where o.UserId == userId && o.ProductId == productId
                             select o).FirstOrDefault();
 
-                _context.SaveChanges();
+                
+                if (item != null)
+                {
+                    _context.Remove(item);
+                    _context.SaveChanges();
+                }
             }
         }
 
@@ -161,9 +168,7 @@ namespace EComm.Service.Repository
             throw new NotImplementedException();
         }
 
-        public void AddToCart(ProductRequestModel productRequestModel)
-        {
-            throw new NotImplementedException();
-        }
+       
+
     }
 }

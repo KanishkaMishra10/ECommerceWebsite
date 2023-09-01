@@ -10,7 +10,7 @@ namespace EComm.Service.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    
 
     public class LoginController: ControllerBase
     {
