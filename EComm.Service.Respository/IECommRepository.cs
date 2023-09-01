@@ -25,7 +25,7 @@ namespace EComm.Service.Repository
 
         public void UpdateProduct(int productId, int userId);     //for seller
 
-        public void AddToCart(ProductRequestModel productRequestModel);
+        public void AddToCart(CartRequestModel productDetails);
 
         public IEnumerable<decimal> TotalCartValue(int userId);
 
@@ -35,8 +35,8 @@ namespace EComm.Service.Repository
         public void RemoveCartItem(int productId, int userId);
 
         // Get all orders
-        IEnumerable<string> GetAllOrders(int userId);   //order history
-        
+        public IEnumerable<string> GetAllOrders(int userId);   //order history
+
         // Cancel order
         public void CancelOrder(int orderId, int userId);
         

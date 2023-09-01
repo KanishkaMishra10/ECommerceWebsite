@@ -160,6 +160,10 @@ namespace EComm.Service.Repository
         {
             throw new NotImplementedException();
         }
-        
+
+        public void AddToCart(ProductRequestModel productRequestModel)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

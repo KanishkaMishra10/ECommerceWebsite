@@ -7,10 +7,11 @@ using EComm.Core.dto.ResponseModel;
 using EComm.Core.dto.RequestModel;
 using EComm.Service.Repository;
 using AutoMapper;
+using System.Net;
 
 namespace EComm.Service.Business
 {
-    public class EcommService
+    public class EcommService : IEcommService
     {
         private readonly IECommRepository _repository;
         private readonly IMapper _mapper;
@@ -21,48 +22,51 @@ namespace EComm.Service.Business
             _mapper = mapper;
         }
 
-        public IEnumerable<ProductResponseModel> GetAvailableBooks()
-        {
-            var result = _repository.GetAvailableBooks();
-            return _mapper.Map<IEnumerable<BookResponseModel>>(result);
-        }
-
-        IEnumerable<ProductResponseModel> GetProductsByTitle(string title)
+        public IEnumerable<ProductResponseModel> GetProductsByTitle(string title)
         {
             var result = _repository.GetProductsByTitle(title);
             return _mapper.Map<IEnumerable<ProductResponseModel>>(result);
         }
 
-        IEnumerable<ProductResponseModel> GetAvailableProducts()
+        public IEnumerable<ProductResponseModel> GetAvailableProducts()
         {
             var result = _repository.GetAvailableProducts();
             return _mapper.Map<IEnumerable<ProductResponseModel>>(result);
         }
 
-        IEnumerable<ProductResponseModel> GetProductsByCategoryId(int categoryId)
+        public IEnumerable<ProductResponseModel> GetProductsByCategoryId(int categoryId)
         {
             var result = _repository.GetProductsByCategoryId(categoryId);
             return _mapper.Map<IEnumerable<ProductResponseModel>>(result);
         }
 
-        IEnumerable<ProductResponseModel> GetProductsById(int productId)
+       public IEnumerable<ProductResponseModel> GetProductsById(int productId)
         {
             var result = _repository.GetProductsById(productId);
             return _mapper.Map<IEnumerable<ProductResponseModel>>(result);
         }
 
-        IEnumerable<CartResponseModel> GetCartDetails(int userId)
+        public IEnumerable<CartResponseModel> GetCartDetails(int userId)
         {
             var result = _repository.GetCartDetails(userId);
             return _mapper.Map<IEnumerable<CartResponseModel>>(result);
         }
-        public void PlaceOrder(int userId);
+        public void PlaceOrder(int userId)
+        {
+            _repository.PlaceOrder( userId);
+        }
 
-        public void AddNewProduct(ProductRequestModel product);     //for seller
+        public void AddNewProduct(ProductRequestModel product)    //for seller
+        {             _repository.AddNewProduct(product);
+               }
 
-        public void UpdateProduct(int productId, int userId);     //for seller
+        public void UpdateProduct(int productId, int userId)     //for seller
+        { _repository.UpdateProduct(productId, userId);}
 
-        public void AddToCart(ProductRequestModel productRequestModel);
+        public void AddToCart(CartRequestModel product)
+        {
+            _repository.AddToCart(product);
+        }
 
         public IEnumerable<decimal> TotalCartValue(int userId)
         {
@@ -70,23 +74,40 @@ namespace EComm.Service.Business
             return _mapper.Map<IEnumerable<decimal>>(result);
         }
 
-        public void UpdateCart(int productId, int userId, int quantity);
+        public void UpdateCart(int productId, int userId, int quantity)
+        {
+            _repository.UpdateCart(productId, userId, quantity);
+        }
 
         //remove from cart
-        public void RemoveCartItem(int productId, int userId);
+        public void RemoveCartItem(int productId, int userId)
+        {
+            _repository.RemoveCartItem(productId, userId);
+        }
 
         // Get all orders
-        IEnumerable<string> GetAllOrders(int userId)   //order history
+       public IEnumerable<string> GetAllOrders(int userId)   //order history
         {
         var result = _repository.GetAllOrders(userId);
             return _mapper.Map<IEnumerable<string>>(result);
         }
 
         // Cancel order
-        public void CancelOrder(int orderId, int userId);
+        public void CancelOrder(int orderId, int userId)
+        {
+            _repository.CancelOrder(orderId, userId);
+        }
 
         //shiftment details
-        public void ShipmentDetails(int orderId);
+        public void ShipmentDetails(int orderId)
+        {
+            _repository.ShipmentDetails(orderId);
+        }
+
+        public void UpdateProduct(ProductRequestModel product)
+        {
+            throw new NotImplementedException();
+        }
 
         //
     }

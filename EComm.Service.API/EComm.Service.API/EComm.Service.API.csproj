@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.10" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\EComm.Core.dto\EComm.Core.dto.csproj" />
+    <ProjectReference Include="..\..\EComm.Service.Business\EComm.Service.Business.csproj" />
+    <ProjectReference Include="..\..\Ecomm.Service.Domain\Ecomm.Service.Domain.csproj" />
+    <ProjectReference Include="..\..\EComm.Service.Respository\EComm.Service.Repository.csproj" />
+  </ItemGroup>
+
+</Project>
